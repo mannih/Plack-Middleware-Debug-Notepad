@@ -2,6 +2,9 @@ package Plack::Middleware::Debug::Notepad;
 use strict;
 use warnings;
 
+our $VERSION = '0.01';
+$VERSION = eval $VERSION;
+
 use Text::Markdown;
 use Text::MicroTemplate qw/ encoded_string /;
 use Plack::Request;
@@ -146,7 +149,7 @@ Plack::Middleware::Debug::Notepad - Abuse the plack debug panel and keep your to
  # If you need to control the location of the file:
  return builder {
      enable 'Debug', panels => [ qw( Environment Response ) ];
-     enable 'Debug::Notepad', notepad_file => 'foo';
+     enable 'Debug::Notepad', notepad_file => '/some/path/some/file';
      $app;
  };
 
@@ -158,6 +161,10 @@ markdown and have it rendered in html.
 =head1 BUGS AND LIMITATIONS
 
 No bugs have been reported.
+
+Currently, no kind of locking mechanism is used to protect the integrity
+of your notepad. The rationale is that this module is supposed to be used
+locally and therefore no concurrent write-requests should normally occur.
 
 Please report any bugs or feature requests through the web interface at
 L<https://github.com/mannih/Plack-Middleware-Debug-Notepad>.
