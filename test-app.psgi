@@ -22,7 +22,8 @@ my $app = sub {
 
 
 return builder {
-    enable 'Debug', panels => [ qw( Environment Response Notepad ) ];
+    enable 'Debug', panels => [ qw( Environment Response ) ];
+    enable 'Debug::Notepad', notepad_file => 'foo';
     $app;
 };
 
