@@ -8,6 +8,7 @@ all_from 'lib/Plack/Middleware/Debug/Notepad.pm';
 repository 'http://github.com/mannih/Plack-Middleware-Debug-Notepad.git';
 
 requires 'Plack';
+requires 'Plack::Middleware::Debug';
 requires 'Text::Markdown';
 requires 'Text::MicroTemplate';
 test_requires 'Test::Most';

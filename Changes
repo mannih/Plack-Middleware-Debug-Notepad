@@ -1,2 +1,5 @@
+0.02 Sun Mar 09 14:28:00 GMT 2014
+    - forgot to list the most important dependency: Plack::Middleware::Debug
+
 0.01 Sat Mar 08 22:00:00 GMT 2014
     - initial release
