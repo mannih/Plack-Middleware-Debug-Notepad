@@ -62,8 +62,12 @@ sub get_markdown {
         local $/;
         return <$fh>;
     }
-
-    return 'Replace this with whatever you need to keep track of.';
+    elsif ( ! -e $self->notepad_file ) {
+        return 'Replace this with whatever you need to keep track of.';
+    }
+    else {
+        return "Error opening your notepad file: $!";
+    }
 }
 
 sub the_template {
