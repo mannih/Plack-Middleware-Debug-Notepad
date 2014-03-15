@@ -22,8 +22,13 @@ sub prepare_app {
 sub call {
     my ( $self, $env ) = @_;
 
-    if ( $env->{ REQUEST_METHOD } eq 'POST' && $env->{ QUERY_STRING } =~ m/__plack_middleware_debug_notepad__/ ) {
-        return $self->save_markdown( $env );
+    if ( $env->{ QUERY_STRING } =~ m/__plack_middleware_debug_notepad__/ ) {
+        if ( $env->{ REQUEST_METHOD } eq 'POST' ) {
+            return $self->save_markdown( $env );
+        }
+        elsif ( $env->{ REQUEST_METHOD } eq 'GET' ) {
+            return [ 200, [ 'Content-Type', 'text/html' ], [ $self->get_markdown ] ];
+        }
     }
     else {
         return $self->SUPER::call( $env );
@@ -90,7 +95,12 @@ sub the_template {
                 $j('#debug_<?= $stash->{ id } ?>_html').toggle();
                 $j('#edit_button_<?= $stash->{ id } ?>').toggle();
             }
-            $j( '#cancel_button_<?= $stash->{ id } ?>' ).click( hide_editor );
+            $j( '#cancel_button_<?= $stash->{ id } ?>' ).click( function() {
+                hide_editor();
+                $j.get( "?__plack_middleware_debug_notepad__", '', function( response ) {
+                    $j('#debug_<?= $stash->{ id } ?>_markdown_edited').val( response );
+                }, 'html' );
+            });
             $j( '#edit_button_<?= $stash->{ id } ?>' ).click( function() {
                 $j('#debug_<?= $stash->{ id } ?>_markdown').toggle();
                 $j('#debug_<?= $stash->{ id } ?>_html').toggle();

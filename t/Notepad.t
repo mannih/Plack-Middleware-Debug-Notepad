@@ -22,13 +22,18 @@ sub test_call {
     my $obj = get_object;
     my $mocker = Test::MockModule->new( 'Plack::Middleware::Debug::Notepad' );
     my $save_called = 0;
+    my $get_called  = 0;
     $mocker->mock( save_markdown => sub { ++$save_called } );
+    $mocker->mock( get_markdown  => sub { ++$get_called  } );
+
     dies_ok { $obj->call( {} ) } 'dies somewhere in Debug::Base';
-    dies_ok { $obj->call( { REQUEST_METHOD => 'GET', QUERY_STRING => 'foo&__plack_middleware_debug_notepad__=bar' } ) } 'request not captured, wrong request method';
     dies_ok { $obj->call( { REQUEST_METHOD => 'POST', QUERY_STRING => 'plack_middleware_debug_notepad' } ) } 'request not captured, wrong query string';
 
     ok $obj->call( { REQUEST_METHOD => 'POST', QUERY_STRING => 'foo&__plack_middleware_debug_notepad__=bar' } ), 'request captured';
     is $save_called, 1, 'save_markdown would have been called once';
+
+    ok $obj->call( { REQUEST_METHOD => 'GET', QUERY_STRING => 'foo&__plack_middleware_debug_notepad__=bar' } ), 'GET is ok, should return our markdown';
+    is $get_called, 1, 'get_markdown would have been called once';
 }
 
 sub test_run {
