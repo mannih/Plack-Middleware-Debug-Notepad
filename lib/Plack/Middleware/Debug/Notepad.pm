@@ -2,7 +2,7 @@ package Plack::Middleware::Debug::Notepad;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 $VERSION = eval $VERSION;
 
 use Text::Markdown;
@@ -82,6 +82,7 @@ sub the_template {
     #debug_<?= $stash->{ id } ?>_html ul {
         list-style: disc inside;
     }
+    #debug_<?= $stash->{ id } ?> input { color: white; background-color: black; }
 </style>
 <div id="debug_<?= $stash->{ id } ?>">
     <script>
@@ -103,7 +104,7 @@ sub the_template {
         })
     </script>
     <div id="debug_<?= $stash->{ id } ?>_markdown" style="display: none">
-        <textarea name="markdown" id="debug_<?= $stash->{ id } ?>_markdown_edited"><?= $stash->{ markdown } ?></textarea>
+        <textarea rows="20" name="markdown" id="debug_<?= $stash->{ id } ?>_markdown_edited"><?= $stash->{ markdown } ?></textarea>
         <br>
         <input type="button" value="save" id="save_button_<?= $stash->{ id } ?>">
         <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Syntax help</a>
