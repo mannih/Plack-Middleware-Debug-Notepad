@@ -1,0 +1,76 @@
+{
+   "abstract" : "Abuse the plack debug panel and keep your todo list in it.",
+   "author" : [
+      "Manni Heumann, C<< <cpan@lxxi.org> >>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Minilla/v0.11.1, CPAN::Meta::Converter version 2.132510",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Plack-Middleware-Debug-Notepad",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "inc",
+         "share",
+         "eg",
+         "examples",
+         "author",
+         "builder"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.36",
+            "Test::MockModule" : "0",
+            "Test::Most" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "CPAN::Meta" : "0",
+            "CPAN::Meta::Prereqs" : "0",
+            "Module::Build" : "0.38"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Test::CPAN::Meta" : "0",
+            "Test::MinimumVersion" : "0.10108",
+            "Test::Pod" : "1.41",
+            "Test::Spellunker" : "v0.2.7"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Plack" : "0",
+            "Plack::Middleware::Debug" : "0",
+            "Text::Markdown" : "0",
+            "Text::MicroTemplate" : "0"
+         }
+      }
+   },
+   "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/mannih/Plack-Middleware-Debug-Notepad/issues"
+      },
+      "homepage" : "https://github.com/mannih/Plack-Middleware-Debug-Notepad",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/mannih/Plack-Middleware-Debug-Notepad",
+         "web" : "https://github.com/mannih/Plack-Middleware-Debug-Notepad"
+      }
+   },
+   "version" : "0.03",
+   "x_contributors" : [
+      "Manni Heumann <github@lxxi.org>"
+   ]
+}
