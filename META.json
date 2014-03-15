@@ -4,7 +4,7 @@
       "Manni Heumann, C<< <cpan@lxxi.org> >>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.11.1, CPAN::Meta::Converter version 2.132510",
+   "generated_by" : "Minilla/v0.11.1, CPAN::Meta::Converter version 2.140640",
    "license" : [
       "perl_5"
    ],
@@ -65,11 +65,11 @@
       "homepage" : "https://github.com/mannih/Plack-Middleware-Debug-Notepad",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/mannih/Plack-Middleware-Debug-Notepad",
+         "url" : "git://github.com/mannih/Plack-Middleware-Debug-Notepad.git",
          "web" : "https://github.com/mannih/Plack-Middleware-Debug-Notepad"
       }
    },
-   "version" : "0.04",
+   "version" : "0.05",
    "x_contributors" : [
       "Manni Heumann <github@lxxi.org>"
    ]
