@@ -79,14 +79,18 @@ sub the_template {
     div#debug_<?= $stash->{ id } ?>_html h2 { font-size: 15px }
     div#debug_<?= $stash->{ id } ?>_html h3 { font-size: 14px; font-weight: 700 }
     div#debug_<?= $stash->{ id } ?>_markdown textarea { width: 90%; height: 80%; padding: 4px; margin: 4px  }
-    #debug_<?= $stash->{ id } ?>_html ul {
-        list-style: disc inside;
-    }
+    #debug_<?= $stash->{ id } ?>_html ul { list-style: disc outside; padding-left: 20px; }
     #debug_<?= $stash->{ id } ?> input { color: white; background-color: black; }
 </style>
 <div id="debug_<?= $stash->{ id } ?>">
     <script>
         jQuery( function( $j ) {
+            function hide_editor() {
+                $j('#debug_<?= $stash->{ id } ?>_markdown').toggle();
+                $j('#debug_<?= $stash->{ id } ?>_html').toggle();
+                $j('#edit_button_<?= $stash->{ id } ?>').toggle();
+            }
+            $j( '#cancel_button_<?= $stash->{ id } ?>' ).click( hide_editor );
             $j( '#edit_button_<?= $stash->{ id } ?>' ).click( function() {
                 $j('#debug_<?= $stash->{ id } ?>_markdown').toggle();
                 $j('#debug_<?= $stash->{ id } ?>_html').toggle();
@@ -96,9 +100,7 @@ sub the_template {
                 var data = { "markdown": $j( '#debug_<?= $stash->{ id } ?>_markdown_edited' ).val() };
                 $j.post( "?__plack_middleware_debug_notepad__", data, function( response ) {
                     $j('#debug_<?= $stash->{ id } ?>_html').html( response );
-                    $j('#debug_<?= $stash->{ id } ?>_markdown').toggle();
-                    $j('#debug_<?= $stash->{ id } ?>_html').toggle();
-                    $j('#edit_button_<?= $stash->{ id } ?>').toggle();
+                    hide_editor();
                 }, 'html' );
             });
         })
@@ -108,6 +110,7 @@ sub the_template {
         <br>
         <input type="button" value="save" id="save_button_<?= $stash->{ id } ?>">
         <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Syntax help</a>
+        <input type="button" value="cancel" id="cancel_button_<?= $stash->{ id } ?>">
     </div>
     <div id="debug_<?= $stash->{ id } ?>_html">
 ?=      $stash->{ rendered }
