@@ -124,8 +124,9 @@ sub the_template {
     </div>
     <div id="debug_<?= $stash->{ id } ?>_html">
 ?=      $stash->{ rendered }
+    </div>
+    <input type="button" value="edit" id="edit_button_<?= $stash->{ id } ?>">
 </div>
-<input type="button" value="edit" id="edit_button_<?= $stash->{ id } ?>">
 EOTMPL
 
 sub save_markdown {
