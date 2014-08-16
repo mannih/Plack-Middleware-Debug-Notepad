@@ -83,6 +83,8 @@ sub the_template {
     div#debug_<?= $stash->{ id } ?>_html h1 { font-size: 16px }
     div#debug_<?= $stash->{ id } ?>_html h2 { font-size: 15px }
     div#debug_<?= $stash->{ id } ?>_html h3 { font-size: 14px; font-weight: 700 }
+    div#debug_<?= $stash->{ id } ?>_html a:link { color: blue }
+    div#debug_<?= $stash->{ id } ?>_html a:visited { color: #800080 }
     div#debug_<?= $stash->{ id } ?>_markdown textarea { width: 90%; height: 80%; padding: 4px; margin: 4px  }
     #debug_<?= $stash->{ id } ?>_html ul { list-style: disc outside; padding-left: 20px; }
     #debug_<?= $stash->{ id } ?> input { color: white; background-color: black; }
