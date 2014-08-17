@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+    - Seems like "on build" isn't the right kind of phase for the Test::* Modules
+
 0.07 2014-08-16T13:34:10Z
 
     - Add some stlyes for links
