@@ -1,5 +1,13 @@
 {{$NEXT}}
 
+0.10 2016-09-27T23:22:36Z
+
+    - Use a proper temporary directory during testing
+
+0.09 2016-09-27T23:19:14Z
+
+    - borked. sorry.
+
 0.08 2014-08-17T07:12:27Z
 
     - Seems like "on build" isn't the right kind of phase for the Test::* Modules

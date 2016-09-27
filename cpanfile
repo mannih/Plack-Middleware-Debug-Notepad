@@ -10,4 +10,5 @@ on build => sub {
 on test => sub {
     requires 'Test::MockModule';
     requires 'Test::Most';
+    requires 'File::Tempdir';
 };

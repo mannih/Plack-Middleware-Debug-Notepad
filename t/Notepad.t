@@ -1,6 +1,7 @@
 use Test::Most;
 use Test::MockModule;
 use Plack::Middleware::Debug::Panel;
+use File::Tempdir;
 
 BEGIN {
     use_ok( 'Plack::Middleware::Debug::Notepad' );
@@ -62,7 +63,8 @@ sub test_run {
 sub test_save_markdown {
     can_ok 'Plack::Middleware::Debug::Notepad', 'save_markdown';
     my $obj = get_object;
-    my $store = 'notepad_file.tmp';
+    my $tmp_dir = File::Tempdir->new;
+    my $store = $tmp_dir->name . '/notepad_file.tmp';
     $obj->notepad_file( $store );
     my $md = "# this\n## is just\n### a test\n";
     my $env = {

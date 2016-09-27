@@ -4,7 +4,7 @@
       "Manni Heumann, C<< <cpan@lxxi.org> >>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v2.1.1, CPAN::Meta::Converter version 2.140640",
+   "generated_by" : "Minilla/v3.0.4, CPAN::Meta::Converter version 2.150005",
    "license" : [
       "perl_5"
    ],
@@ -33,7 +33,7 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.38"
+            "Module::Build::Tiny" : "0.035"
          }
       },
       "develop" : {
@@ -55,6 +55,7 @@
       },
       "test" : {
          "requires" : {
+            "File::Tempdir" : "0",
             "Test::MockModule" : "0",
             "Test::Most" : "0"
          }
@@ -63,17 +64,18 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/mannih/Plack-Middleware-Debug-Notepad/issues"
+         "web" : "https://github.com///issues"
       },
-      "homepage" : "https://github.com/mannih/Plack-Middleware-Debug-Notepad",
+      "homepage" : "https://github.com//",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/mannih/Plack-Middleware-Debug-Notepad.git",
-         "web" : "https://github.com/mannih/Plack-Middleware-Debug-Notepad"
+         "url" : "git://github.com//.git",
+         "web" : "https://github.com//"
       }
    },
-   "version" : "0.08",
+   "version" : "0.10",
    "x_contributors" : [
       "Manni Heumann <github@lxxi.org>"
-   ]
+   ],
+   "x_serialization_backend" : "JSON::PP version 2.27300"
 }
