@@ -11,4 +11,5 @@ on test => sub {
     requires 'Test::MockObject::Extends';
     requires 'Test::Most';
     requires 'File::Tempdir';
+    requires 'Test::MockModule';
 };
