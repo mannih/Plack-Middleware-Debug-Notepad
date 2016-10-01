@@ -1,4 +1,5 @@
 use Test::Most;
+use Test::MockObject::Extends;
 use Test::MockModule;
 use Plack::Middleware::Debug::Panel;
 use File::Tempdir;
@@ -20,21 +21,44 @@ sub get_object {
 
 sub test_call {
     can_ok 'Plack::Middleware::Debug::Notepad', 'call';
-    my $obj = get_object;
-    my $mocker = Test::MockModule->new( 'Plack::Middleware::Debug::Notepad' );
-    my $save_called = 0;
-    my $get_called  = 0;
-    $mocker->mock( save_markdown => sub { ++$save_called } );
-    $mocker->mock( get_markdown  => sub { ++$get_called  } );
 
-    dies_ok { $obj->call( {} ) } 'dies somewhere in Debug::Base';
-    dies_ok { $obj->call( { REQUEST_METHOD => 'POST', QUERY_STRING => 'plack_middleware_debug_notepad' } ) } 'request not captured, wrong query string';
+    subtest 'b0rked request' => sub {
+        my $obj = get_object;
+        dies_ok
+            { $obj->call( {} ) }
+            'dies somewhere in Debug::Base';
 
-    ok $obj->call( { REQUEST_METHOD => 'POST', QUERY_STRING => 'foo&__plack_middleware_debug_notepad__=bar' } ), 'request captured';
-    is $save_called, 1, 'save_markdown would have been called once';
+        dies_ok
+            { $obj->call( {
+                REQUEST_METHOD => 'POST',
+                QUERY_STRING => 'plack_middleware_debug_notepad'
+              } )
+            }
+            'request not captured, wrong query string';
+    };
 
-    ok $obj->call( { REQUEST_METHOD => 'GET', QUERY_STRING => 'foo&__plack_middleware_debug_notepad__=bar' } ), 'GET is ok, should return our markdown';
-    is $get_called, 1, 'get_markdown would have been called once';
+    subtest 'GET - retrieve notpad content' => sub {
+        my $obj = Test::MockObject::Extends->new( get_object );
+        $obj->mock( get_markdown => sub { 'hello world' } );
+        my $result = $obj->call( {
+            REQUEST_METHOD => 'GET',
+            QUERY_STRING   => 'foo&__plack_middleware_debug_notepad__=bar'
+        } );
+        is $result->[ 0 ], 200, 'returns status 200';
+        is $result->[ 1 ]->[ 0 ], 'Content-Type', 'sets a Content-Type';
+        is $result->[ 1 ]->[ 1 ], 'text/html', 'to text/html';
+        is $result->[ 2 ]->[ 0 ], 'hello world', 'the result of get_markdown() makes up the respnose body';
+    };
+
+    subtest 'POST - save content' => sub {
+        my $obj = Test::MockObject::Extends->new( get_object );
+        $obj->mock( save_markdown => sub { 'save_markdown result' } );
+        my $result = $obj->call( {
+            REQUEST_METHOD => 'POST',
+            QUERY_STRING => 'foo&__plack_middleware_debug_notepad__=bar'
+        } );
+        is $result, 'save_markdown result', 'returns the result of save_markdown';
+    };
 }
 
 sub test_run {
@@ -62,15 +86,21 @@ sub test_run {
 
 sub test_save_markdown {
     can_ok 'Plack::Middleware::Debug::Notepad', 'save_markdown';
-    my $obj = get_object;
+
     my $tmp_dir = File::Tempdir->new;
     my $store = $tmp_dir->name . '/notepad_file.tmp';
+
+    my $obj = get_object;
     $obj->notepad_file( $store );
+
     my $md = "# this\n## is just\n### a test\n";
-    my $env = {
-        'plack.request.body' => Hash::MultiValue->new( markdown => $md )
-    };
-    my $result = $obj->save_markdown( $env );
+    my $mock_request = Test::MockModule->new(
+        'Plack::Request'
+    );
+    $mock_request->mock( param => sub { $md } );
+
+    my $result = $obj->save_markdown( {} );
+
     is $result->[ 0 ], 200, 'returns status 200';
     is $result->[ 1 ]->[ 1 ], 'text/html', 'content type seems ok';
 

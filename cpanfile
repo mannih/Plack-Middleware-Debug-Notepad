@@ -8,7 +8,7 @@ on build => sub {
 };
 
 on test => sub {
-    requires 'Test::MockModule';
+    requires 'Test::MockObject::Extends';
     requires 'Test::Most';
     requires 'File::Tempdir';
 };
